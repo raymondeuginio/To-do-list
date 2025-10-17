@@ -100,21 +100,28 @@ The command clears cached configuration before executing the Pest-powered test s
 
 ## Screenshot Checklist for Documentation
 <img width="1043" height="803" alt="image" src="https://github.com/user-attachments/assets/9d44323c-98cf-4a7c-b550-671c2c9b944e" />
-<br>Dashboard – Task Overview and Filters
+<br>1. Dashboard – Task Overview and Filters
 Displays the welcome banner, current date, and navigation buttons (Tasks / Calendar).
 The filter section allows searching by title or notes, filtering by status, and sorting tasks.
-The “Add a Task” form lets users create new tasks with title, due date, priority, and notes.
+The “Add a Task” form lets users create new tasks with title, due date, priority, and notes.<br>
 
 <img width="987" height="863" alt="image" src="https://github.com/user-attachments/assets/8f560f22-0e15-45f9-9ac3-081d453de2a6" />
-<br>Task List – Bulk Actions and Quick Edit
+<br>2. Task List – Bulk Actions and Quick Edit
 <br>Shows the full task table with columns for title, due date, priority, and status.
 <br>Includes bulk actions (toggle done / delete), inline status updates, and quick edit options for each row.
-<br>Color-coded badges indicate priority and completion status.
+<br>Color-coded badges indicate priority and completion status.<br>
+
+<img width="836" height="871" alt="image" src="https://github.com/user-attachments/assets/3fdc2354-82db-40d7-acb4-77739f50a8f6" />
+<br>3. Calendar View – Monthly Schedule
+<br>Provides an interactive monthly calendar highlighting each day’s tasks.
+<br>Tasks are color-coded by priority, and users can navigate between months or jump back to the current one.
+<br>This view helps visualize deadlines and workload distribution at a glance.<br>
 
 <img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/c0c17596-6aab-4247-98fd-6147d4fac3ac" />
-<br>Statistics – Monthly Highlights & Weekly Breakdown
+<br>4. Statistics – Monthly Highlights & Weekly Breakdown
 <br>Displays analytical summaries of completed and active tasks by priority category.
-<br>The right-side “Weekly Breakdown” panel shows due dates and completion status for each week, giving a clear productivity overview.
+<br>The right-side “Weekly Breakdown” panel shows due dates and completion status for each week, giving a clear productivity overview.<br><br>
+
 ## Contribution Guidelines
 
 - Run `composer pint` to keep PHP styling consistent.
