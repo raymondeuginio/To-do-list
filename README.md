@@ -105,7 +105,13 @@ Displays the welcome banner, current date, and navigation buttons (Tasks / Calen
 The filter section allows searching by title or notes, filtering by status, and sorting tasks.
 The “Add a Task” form lets users create new tasks with title, due date, priority, and notes.
 
-<img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/c0c17596-6aab-4247-98fd-6147d4fac3ac" /><br>
+<img width="987" height="863" alt="image" src="https://github.com/user-attachments/assets/8f560f22-0e15-45f9-9ac3-081d453de2a6" />
+<br>Task List – Bulk Actions and Quick Edit
+<br>Shows the full task table with columns for title, due date, priority, and status.
+<br>Includes bulk actions (toggle done / delete), inline status updates, and quick edit options for each row.
+<br>Color-coded badges indicate priority and completion status.
+
+<img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/c0c17596-6aab-4247-98fd-6147d4fac3ac" />
 <br>Statistics – Monthly Highlights & Weekly Breakdown
 <br>Displays analytical summaries of completed and active tasks by priority category.
 <br>The right-side “Weekly Breakdown” panel shows due dates and completion status for each week, giving a clear productivity overview.
