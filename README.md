@@ -99,13 +99,16 @@ The command clears cached configuration before executing the Pest-powered test s
 - `database/migrations/2024_01_01_000000_create_tasks_table.php` – schema definition for the `tasks` table.
 
 ## Screenshot Checklist for Documentation
-<img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/c0c17596-6aab-4247-98fd-6147d4fac3ac" /> 
-Dashboard – Task Overview and Filters
+<img width="1043" height="803" alt="image" src="https://github.com/user-attachments/assets/9d44323c-98cf-4a7c-b550-671c2c9b944e" />
+<br>Dashboard – Task Overview and Filters
 Displays the welcome banner, current date, and navigation buttons (Tasks / Calendar).
 The filter section allows searching by title or notes, filtering by status, and sorting tasks.
 The “Add a Task” form lets users create new tasks with title, due date, priority, and notes.
 
-
+<img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/c0c17596-6aab-4247-98fd-6147d4fac3ac" /> 
+<br>Statistics – Monthly Highlights & Weekly Breakdown
+Displays analytical summaries of completed and active tasks by priority category.
+The right-side “Weekly Breakdown” panel shows due dates and completion status for each week, giving a clear productivity overview.
 ## Contribution Guidelines
 
 - Run `composer pint` to keep PHP styling consistent.
