@@ -28,13 +28,14 @@
         : 0;
 @endphp
 
-<div class="grid gap-6 xl:grid-cols-[minmax(0,2.1fr)_minmax(260px,1fr)]">
-    <div class="space-y-6">
-        <div class="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60">
-            <div class="border-b border-slate-200/60 px-6 py-4">
-                <h2 class="text-base font-semibold text-slate-900">Filter tasks</h2>
-            </div>
-            <form method="GET" action="{{ route('tasks.index') }}" class="px-6 py-5 grid gap-4 sm:grid-cols-4">
+<div class="space-y-10">
+    <div class="grid gap-6 xl:grid-cols-[minmax(0,2.1fr)_minmax(260px,1fr)]">
+        <div class="space-y-6">
+            <div class="rounded-3xl bg-white/80 shadow-lg ring-1 ring-white/60 backdrop-blur">
+                <div class="border-b border-white/60 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-rose-500/10 px-6 py-4">
+                    <h2 class="text-base font-semibold text-slate-900">Filter tasks</h2>
+                </div>
+                <form method="GET" action="{{ route('tasks.index') }}" class="grid gap-4 px-6 py-5 sm:grid-cols-4">
                 <div class="sm:col-span-2">
                     <label for="q" class="block text-sm font-medium text-slate-600">Search</label>
                     <input type="text" id="q" name="q" value="{{ $filters['q'] }}" placeholder="Search title or notes" class="mt-1 w-full rounded-lg border-slate-200 bg-slate-50 focus:border-indigo-400 focus:ring-indigo-300" />
@@ -62,14 +63,14 @@
                     </div>
                     <a href="{{ route('tasks.export', request()->query()) }}" class="inline-flex items-center rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:border-slate-300">Export CSV</a>
                 </div>
-            </form>
-        </div>
-
-        <div class="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60">
-            <div class="border-b border-slate-200/60 px-6 py-4">
-                <h2 class="text-base font-semibold text-slate-900">Add a task</h2>
+                </form>
             </div>
-            <form method="POST" action="{{ route('tasks.store') }}" class="px-6 py-5 grid gap-4 sm:grid-cols-2">
+
+            <div class="rounded-3xl bg-white/80 shadow-lg ring-1 ring-white/60 backdrop-blur">
+                <div class="border-b border-white/60 bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-blue-500/10 px-6 py-4">
+                    <h2 class="text-base font-semibold text-slate-900">Add a task</h2>
+                </div>
+                <form method="POST" action="{{ route('tasks.store') }}" class="grid gap-4 px-6 py-5 sm:grid-cols-2">
                 @csrf
                 <div class="sm:col-span-2">
                     <label for="title" class="block text-sm font-medium text-slate-600">Title<span class="text-rose-500">*</span></label>
@@ -94,23 +95,23 @@
                 <div class="sm:col-span-2 flex justify-end">
                     <button type="submit" class="inline-flex items-center rounded-lg bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Create task</button>
                 </div>
-            </form>
-        </div>
-
-        <div class="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60">
-            <div class="flex items-center justify-between border-b border-slate-200/60 px-6 py-4">
-                <div>
-                    <h2 class="text-base font-semibold text-slate-900">Your tasks</h2>
-                    <p class="text-xs text-slate-500">Stay on top of your commitments with a compact overview.</p>
-                </div>
-                @if ($tasks->total())
-                    <div class="text-right">
-                        <p class="text-sm font-semibold text-slate-700">{{ $tasks->total() }}</p>
-                        <p class="text-xs text-slate-400">tasks</p>
-                    </div>
-                @endif
+                </form>
             </div>
-            <div class="px-6 py-5 space-y-5">
+
+            <div class="rounded-3xl bg-white/80 shadow-xl ring-1 ring-white/60 backdrop-blur">
+                <div class="flex items-center justify-between border-b border-white/60 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 px-6 py-4">
+                    <div>
+                        <h2 class="text-base font-semibold text-slate-900">Your tasks</h2>
+                        <p class="text-xs text-slate-500">Stay on top of your commitments with a compact overview.</p>
+                    </div>
+                    @if ($tasks->total())
+                        <div class="rounded-2xl bg-white/90 px-4 py-2 text-right shadow-sm">
+                            <p class="text-sm font-semibold text-indigo-600">{{ $tasks->total() }}</p>
+                            <p class="text-xs text-slate-400">tasks</p>
+                        </div>
+                    @endif
+                </div>
+                <div class="space-y-5 px-6 py-5">
                 @if ($errors->any())
                     <div class="rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-rose-600">
                         <ul class="space-y-1 text-sm">
@@ -267,115 +268,126 @@
                     </div>
                 @endif
             </div>
+                </div>
+            </div>
         </div>
+
+        <aside class="space-y-6">
+            <div class="rounded-3xl bg-white/80 shadow-lg ring-1 ring-white/60 backdrop-blur">
+                <div class="border-b border-white/60 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-emerald-500/10 px-5 py-4">
+                    <h2 class="text-base font-semibold text-slate-900">Recap</h2>
+                    <p class="text-xs text-slate-500">Overview of your workload.</p>
+                </div>
+                <div class="space-y-5 px-5 py-5 text-sm">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="rounded-xl border border-indigo-100 bg-indigo-50/70 p-3 shadow-sm">
+                            <p class="text-xs text-indigo-500">Active</p>
+                            <p class="mt-1 text-2xl font-semibold text-indigo-700">{{ $summary['totals']['active'] }}</p>
+                        </div>
+                        <div class="rounded-xl border border-emerald-100 bg-emerald-50/70 p-3 shadow-sm">
+                            <p class="text-xs text-emerald-500">Completed</p>
+                            <p class="mt-1 text-2xl font-semibold text-emerald-600">{{ $summary['totals']['completed'] }}</p>
+                        </div>
+                        <div class="rounded-xl border border-rose-100 bg-rose-50/70 p-3 shadow-sm">
+                            <p class="text-xs text-rose-500">Overdue</p>
+                            <p class="mt-1 text-2xl font-semibold text-rose-600">{{ $summary['totals']['overdue'] }}</p>
+                        </div>
+                        <div class="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+                            <p class="text-xs text-slate-500">All tasks</p>
+                            <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $summary['totals']['total'] }}</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-medium text-slate-600">
+                                <span>This week</span>
+                                <span>{{ $summary['week']['completed'] }} / {{ $summary['week']['total'] }}</span>
+                            </div>
+                            <div class="mt-2 h-2 rounded-full bg-slate-200">
+                                <div class="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width: {{ $weekCompletion }}%"></div>
+                            </div>
+                            <p class="mt-2 text-xs text-slate-500">{{ $summary['week']['remaining'] }} tasks remaining this week.</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-medium text-slate-600">
+                                <span>This month</span>
+                                <span>{{ $summary['month']['completed'] }} / {{ $summary['month']['total'] }}</span>
+                            </div>
+                            <div class="mt-2 h-2 rounded-full bg-slate-200">
+                                <div class="h-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500" style="width: {{ $monthCompletion }}%"></div>
+                            </div>
+                            <p class="mt-2 text-xs text-slate-500">{{ $summary['month']['remaining'] }} tasks left this month.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
     </div>
 
-    <aside class="space-y-6">
-        <div class="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60">
-            <div class="border-b border-slate-200/60 px-5 py-4">
-                <h2 class="text-base font-semibold text-slate-900">Recap</h2>
-                <p class="text-xs text-slate-500">Overview of your workload.</p>
+    <section class="rounded-3xl bg-white/80 p-6 shadow-xl ring-1 ring-white/60 backdrop-blur">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-widest text-indigo-500">Calendar snapshot</p>
+                <h2 class="mt-1 text-xl font-semibold text-slate-900">{{ $calendar['monthLabel'] }}</h2>
+                <p class="mt-1 text-sm text-slate-500">Get a colorful glimpse of your schedule or open the dedicated calendar page for a full experience.</p>
             </div>
-            <div class="px-5 py-5 space-y-5 text-sm">
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                        <p class="text-xs text-slate-500">Active</p>
-                        <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $summary['totals']['active'] }}</p>
-                    </div>
-                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                        <p class="text-xs text-slate-500">Completed</p>
-                        <p class="mt-1 text-2xl font-semibold text-emerald-600">{{ $summary['totals']['completed'] }}</p>
-                    </div>
-                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                        <p class="text-xs text-slate-500">Overdue</p>
-                        <p class="mt-1 text-2xl font-semibold text-rose-600">{{ $summary['totals']['overdue'] }}</p>
-                    </div>
-                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                        <p class="text-xs text-slate-500">All tasks</p>
-                        <p class="mt-1 text-2xl font-semibold text-slate-900">{{ $summary['totals']['total'] }}</p>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <div>
-                        <div class="flex items-center justify-between text-xs font-medium text-slate-600">
-                            <span>This week</span>
-                            <span>{{ $summary['week']['completed'] }} / {{ $summary['week']['total'] }}</span>
-                        </div>
-                        <div class="mt-2 h-2 rounded-full bg-slate-200">
-                            <div class="h-2 rounded-full bg-indigo-500" style="width: {{ $weekCompletion }}%"></div>
-                        </div>
-                        <p class="mt-2 text-xs text-slate-500">{{ $summary['week']['remaining'] }} tasks remaining this week.</p>
-                    </div>
-                    <div>
-                        <div class="flex items-center justify-between text-xs font-medium text-slate-600">
-                            <span>This month</span>
-                            <span>{{ $summary['month']['completed'] }} / {{ $summary['month']['total'] }}</span>
-                        </div>
-                        <div class="mt-2 h-2 rounded-full bg-slate-200">
-                            <div class="h-2 rounded-full bg-indigo-500" style="width: {{ $monthCompletion }}%"></div>
-                        </div>
-                        <p class="mt-2 text-xs text-slate-500">{{ $summary['month']['remaining'] }} tasks left this month.</p>
-                    </div>
-                </div>
-            </div>
+            <a href="{{ route('tasks.calendar') }}" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:from-indigo-600 hover:to-purple-600">
+                Open full calendar
+                <span aria-hidden="true">⟶</span>
+            </a>
         </div>
-
-        <div class="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60">
-            <div class="border-b border-slate-200/60 px-5 py-4">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-base font-semibold text-slate-900">Calendar</h2>
-                    <span class="text-xs font-medium text-slate-500">{{ $calendar['monthLabel'] }}</span>
-                </div>
+        @php
+            $weeks = $calendar['days']->chunk(7);
+        @endphp
+        <div class="mt-6 overflow-hidden rounded-3xl border border-slate-200/70 bg-gradient-to-br from-white via-sky-50 to-emerald-50 p-4">
+            <div class="grid grid-cols-7 gap-2 text-[11px] font-semibold uppercase tracking-wide text-indigo-400">
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+                <span>Sun</span>
             </div>
-            <div class="px-5 py-5">
-                @php
-                    $weeks = $calendar['days']->chunk(7);
-                @endphp
-                <div class="grid grid-cols-7 gap-2 text-[11px] font-medium uppercase tracking-wide text-slate-400">
-                    <span>Mon</span>
-                    <span>Tue</span>
-                    <span>Wed</span>
-                    <span>Thu</span>
-                    <span>Fri</span>
-                    <span>Sat</span>
-                    <span>Sun</span>
-                </div>
-                <div class="mt-3 space-y-2">
-                    @foreach ($weeks as $week)
-                        <div class="grid grid-cols-7 gap-2">
-                            @foreach ($week as $day)
-                                @php
-                                    $dateKey = $day->toDateString();
-                                    $isCurrentMonth = $day->isSameMonth($today);
-                                    $isToday = $day->isSameDay($today);
-                                    $dayTasks = $calendar['tasksByDate']->get($dateKey, collect());
-                                @endphp
-                                <div class="min-h-[92px] rounded-xl border px-2.5 py-2 text-xs {{ $isToday ? 'border-indigo-500 bg-indigo-50' : ($isCurrentMonth ? 'border-slate-200 bg-slate-50' : 'border-slate-100 bg-white opacity-70') }}">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-[11px] font-semibold {{ $isCurrentMonth ? 'text-slate-700' : 'text-slate-300' }}">{{ $day->format('j') }}</span>
-                                        @if ($isToday)
-                                            <span class="rounded-full bg-indigo-500 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Today</span>
-                                        @endif
-                                    </div>
-                                    <div class="mt-2 space-y-1">
-                                        @foreach ($dayTasks as $calendarTask)
-                                            @php
-                                                $priorityStyle = $priorityStyles[$calendarTask->priority];
-                                            @endphp
-                                            <span class="block truncate rounded-lg px-2 py-1 text-[11px] font-medium {{ $priorityStyle['badge'] }}">{{ $calendarTask->title }}</span>
-                                        @endforeach
-                                        @if ($dayTasks->isEmpty())
-                                            <span class="block text-[10px] text-slate-300">-</span>
-                                        @endif
-                                    </div>
+            <div class="mt-3 space-y-2">
+                @foreach ($weeks as $week)
+                    <div class="grid grid-cols-7 gap-2">
+                        @foreach ($week as $day)
+                            @php
+                                $dateKey = $day->toDateString();
+                                $isCurrentMonth = $day->isSameMonth($calendar['reference']);
+                                $isToday = $day->isSameDay($today);
+                                $dayTasks = $calendar['tasksByDate']->get($dateKey, collect());
+                            @endphp
+                            <div class="min-h-[110px] rounded-2xl border px-2.5 py-2 text-xs shadow-sm transition {{ $isToday ? 'border-indigo-500 bg-white shadow-lg' : ($isCurrentMonth ? 'border-transparent bg-white/80 hover:border-indigo-300 hover:shadow-md' : 'border-dashed border-slate-200 bg-white/40 text-slate-300') }}">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] font-semibold {{ $isCurrentMonth ? 'text-slate-700' : 'text-slate-300' }}">{{ $day->format('j') }}</span>
+                                    @if ($isToday)
+                                        <span class="rounded-full bg-indigo-500 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">Today</span>
+                                    @elseif ($dayTasks->isNotEmpty())
+                                        <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-600">{{ $dayTasks->count() }}</span>
+                                    @endif
                                 </div>
-                            @endforeach
-                        </div>
-                    @endforeach
-                </div>
+                                <div class="mt-2 space-y-1">
+                                    @foreach ($dayTasks->take(3) as $calendarTask)
+                                        @php
+                                            $priorityStyle = $priorityStyles[$calendarTask->priority];
+                                        @endphp
+                                        <span class="block truncate rounded-lg px-2 py-1 text-[11px] font-medium {{ $priorityStyle['badge'] }}">{{ $calendarTask->title }}</span>
+                                    @endforeach
+                                    @if ($dayTasks->count() > 3)
+                                        <span class="block text-[10px] font-semibold text-indigo-500">+{{ $dayTasks->count() - 3 }} more</span>
+                                    @elseif ($dayTasks->isEmpty())
+                                        <span class="block text-[10px] text-slate-300">No tasks</span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
             </div>
         </div>
-    </aside>
+    </section>
 </div>
 @endsection

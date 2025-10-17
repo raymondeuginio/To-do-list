@@ -39,19 +39,7 @@ class TaskController extends Controller
             ->whereBetween('due_date', [$startOfMonth, $endOfMonth])
             ->get();
 
-        $calendarStart = $startOfMonth->copy()->startOfWeek();
-        $calendarEnd = $endOfMonth->copy()->endOfWeek();
-
-        $calendarDays = collect(CarbonPeriod::create($calendarStart, $calendarEnd))->map(
-            static fn (Carbon $day) => $day->copy(),
-        );
-
-        $calendarTasksByDate = Task::query()
-            ->whereNotNull('due_date')
-            ->whereBetween('due_date', [$calendarStart, $calendarEnd])
-            ->orderBy('due_date')
-            ->get()
-            ->groupBy(fn (Task $task) => $task->due_date?->toDateString());
+        $calendar = $this->buildCalendar($now);
 
         $summary = [
             'totals' => [
@@ -84,12 +72,44 @@ class TaskController extends Controller
                 'sort' => $sort,
             ],
             'summary' => $summary,
-            'calendar' => [
-                'monthLabel' => $now->format('F Y'),
-                'days' => $calendarDays,
-                'tasksByDate' => $calendarTasksByDate,
-            ],
+            'calendar' => $calendar,
             'today' => $now,
+        ]);
+    }
+
+    public function calendar(Request $request): View
+    {
+        $referenceDate = $this->resolveReferenceDate($request->get('month'));
+        $calendar = $this->buildCalendar($referenceDate);
+        $today = Carbon::now();
+
+        $monthTasks = Task::query()
+            ->whereNotNull('due_date')
+            ->whereBetween('due_date', [$calendar['start'], $calendar['end']])
+            ->orderBy('due_date')
+            ->get();
+
+        $priorityOrder = ['high', 'medium', 'low'];
+        $priorityBreakdown = collect($priorityOrder)
+            ->mapWithKeys(static function (string $priority) use ($monthTasks) {
+                return [$priority => $monthTasks->where('priority', $priority)->count()];
+            });
+
+        $calendar['previousMonth'] = $referenceDate->copy()->subMonth()->format('Y-m');
+        $calendar['nextMonth'] = $referenceDate->copy()->addMonth()->format('Y-m');
+
+        return view('tasks.calendar', [
+            'calendar' => $calendar,
+            'today' => $today,
+            'stats' => [
+                'total' => $monthTasks->count(),
+                'completed' => $monthTasks->where('is_done', true)->count(),
+                'active' => $monthTasks->where('is_done', false)->count(),
+            ],
+            'priorityBreakdown' => $priorityBreakdown,
+            'tasksByWeek' => $monthTasks->groupBy(
+                static fn (Task $task) => optional(optional($task->due_date)->copy()?->startOfWeek())->format('M j') ?? 'No date'
+            ),
         ]);
     }
 
@@ -228,5 +248,43 @@ class TaskController extends Controller
         $validated['is_done'] = $request->boolean('is_done');
 
         return $validated;
+    }
+
+    protected function buildCalendar(Carbon $referenceDate): array
+    {
+        $startOfMonth = $referenceDate->copy()->startOfMonth();
+        $endOfMonth = $referenceDate->copy()->endOfMonth();
+
+        $calendarStart = $startOfMonth->copy()->startOfWeek();
+        $calendarEnd = $endOfMonth->copy()->endOfWeek();
+
+        $calendarDays = collect(CarbonPeriod::create($calendarStart, $calendarEnd))->map(
+            static fn (Carbon $day) => $day->copy(),
+        );
+
+        $calendarTasksByDate = Task::query()
+            ->whereNotNull('due_date')
+            ->whereBetween('due_date', [$calendarStart, $calendarEnd])
+            ->orderBy('due_date')
+            ->get()
+            ->groupBy(fn (Task $task) => $task->due_date?->toDateString());
+
+        return [
+            'monthLabel' => $referenceDate->format('F Y'),
+            'days' => $calendarDays,
+            'tasksByDate' => $calendarTasksByDate,
+            'start' => $calendarStart,
+            'end' => $calendarEnd,
+            'reference' => $referenceDate->copy(),
+        ];
+    }
+
+    protected function resolveReferenceDate(?string $month): Carbon
+    {
+        if ($month && preg_match('/^\d{4}-\d{2}$/', $month)) {
+            return Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+        }
+
+        return Carbon::now()->startOfMonth();
     }
 }
