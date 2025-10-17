@@ -105,10 +105,10 @@ Displays the welcome banner, current date, and navigation buttons (Tasks / Calen
 The filter section allows searching by title or notes, filtering by status, and sorting tasks.
 The “Add a Task” form lets users create new tasks with title, due date, priority, and notes.
 
-<img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/c0c17596-6aab-4247-98fd-6147d4fac3ac" /> 
+<img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/c0c17596-6aab-4247-98fd-6147d4fac3ac" /><br>
 <br>Statistics – Monthly Highlights & Weekly Breakdown
-Displays analytical summaries of completed and active tasks by priority category.
-The right-side “Weekly Breakdown” panel shows due dates and completion status for each week, giving a clear productivity overview.
+<br>Displays analytical summaries of completed and active tasks by priority category.
+<br>The right-side “Weekly Breakdown” panel shows due dates and completion status for each week, giving a clear productivity overview.
 ## Contribution Guidelines
 
 - Run `composer pint` to keep PHP styling consistent.
