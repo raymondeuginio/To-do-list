@@ -12,10 +12,15 @@
 </head>
 <body class="bg-slate-100 text-slate-800">
     <div class="min-h-screen py-10">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <header class="mb-8">
-                <h1 class="text-3xl font-semibold text-slate-900">My Tasks</h1>
-                <p class="text-slate-500 mt-1">Focus on what matters today.</p>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <header class="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                    <h1 class="text-3xl font-semibold text-slate-900">My Tasks</h1>
+                    <p class="text-slate-500 mt-1">Focus on what matters today.</p>
+                </div>
+                <span class="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-700">
+                    {{ now()->format('l, F j, Y') }}
+                </span>
             </header>
 
             @if (session('status'))
