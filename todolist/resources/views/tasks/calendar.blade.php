@@ -74,10 +74,19 @@
                                         @php
                                             $priorityStyle = $priorityStyles[$calendarTask->priority];
                                         @endphp
-                                        <div class="rounded-xl px-3 py-2 text-xs font-semibold shadow-sm {{ $priorityStyle['badge'] }}">
+                                        <button
+                                            type="button"
+                                            class="w-full rounded-xl px-3 py-2 text-left text-xs font-semibold shadow-sm transition hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-indigo-500 {{ $priorityStyle['badge'] }}"
+                                            data-calendar-task
+                                            data-title="{{ $calendarTask->title }}"
+                                            data-status="{{ $calendarTask->is_done ? 'Completed' : 'In progress' }}"
+                                            data-priority="{{ ucfirst($calendarTask->priority) }}"
+                                            data-date="{{ optional($calendarTask->due_date)->format('l, F j, Y') }}"
+                                            data-notes="{{ e($calendarTask->notes ?? '') }}"
+                                        >
                                             <div class="truncate">{{ $calendarTask->title }}</div>
                                             <p class="mt-1 text-[11px] font-medium text-slate-500">{{ $calendarTask->is_done ? 'Completed' : 'Due' }}</p>
-                                        </div>
+                                        </button>
                                     @empty
                                         <p class="text-[11px] font-medium text-slate-300">No tasks scheduled</p>
                                     @endforelse
@@ -170,4 +179,91 @@
         </div>
     </section>
 </div>
+<div id="calendar-task-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 px-4 py-8">
+    <div class="relative w-full max-w-md rounded-3xl bg-white/95 p-6 shadow-2xl ring-1 ring-white/70">
+        <button type="button" class="absolute right-4 top-4 text-slate-400 transition hover:text-slate-600" data-modal-dismiss aria-label="Close details">
+            ✕
+        </button>
+        <div class="space-y-4">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-widest text-indigo-500">Task</p>
+                <h3 id="modal-task-title" class="mt-1 text-2xl font-bold text-slate-900"></h3>
+            </div>
+            <dl class="space-y-3 text-sm text-slate-600">
+                <div class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+                    <dt class="font-medium">Status</dt>
+                    <dd id="modal-task-status" class="font-semibold text-slate-800"></dd>
+                </div>
+                <div class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+                    <dt class="font-medium">Priority</dt>
+                    <dd id="modal-task-priority" class="font-semibold text-slate-800"></dd>
+                </div>
+                <div class="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+                    <dt class="font-medium">Due date</dt>
+                    <dd id="modal-task-date" class="font-semibold text-slate-800"></dd>
+                </div>
+                <div class="rounded-2xl bg-slate-50 px-4 py-3">
+                    <dt class="font-medium text-slate-700">Notes</dt>
+                    <dd id="modal-task-notes" class="mt-2 whitespace-pre-line text-slate-600"></dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('calendar-task-modal');
+            if (!modal) {
+                return;
+            }
+
+            const titleEl = modal.querySelector('#modal-task-title');
+            const statusEl = modal.querySelector('#modal-task-status');
+            const priorityEl = modal.querySelector('#modal-task-priority');
+            const dateEl = modal.querySelector('#modal-task-date');
+            const notesEl = modal.querySelector('#modal-task-notes');
+            const closeButtons = modal.querySelectorAll('[data-modal-dismiss]');
+
+            function openModal() {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            function closeModal() {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            closeButtons.forEach((button) => {
+                button.addEventListener('click', closeModal);
+            });
+
+            document.querySelectorAll('[data-calendar-task]').forEach((taskButton) => {
+                taskButton.addEventListener('click', () => {
+                    titleEl.textContent = taskButton.dataset.title || '';
+                    statusEl.textContent = taskButton.dataset.status || 'In progress';
+                    priorityEl.textContent = taskButton.dataset.priority || '';
+                    dateEl.textContent = taskButton.dataset.date || 'No due date';
+                    notesEl.textContent = taskButton.dataset.notes || 'No notes provided.';
+
+                    openModal();
+                });
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+@endpush
 @endsection

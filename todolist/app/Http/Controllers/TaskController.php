@@ -39,8 +39,6 @@ class TaskController extends Controller
             ->whereBetween('due_date', [$startOfMonth, $endOfMonth])
             ->get();
 
-        $calendar = $this->buildCalendar($now);
-
         $summary = [
             'totals' => [
                 'total' => Task::query()->count(),
@@ -72,7 +70,6 @@ class TaskController extends Controller
                 'sort' => $sort,
             ],
             'summary' => $summary,
-            'calendar' => $calendar,
             'today' => $now,
         ]);
     }
