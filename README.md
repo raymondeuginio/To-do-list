@@ -1,4 +1,4 @@
-<img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/65651103-1380-4aeb-a5cc-f62a71ceeb49" /><img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/589722c3-949a-4ebf-8ab7-d4ffac6d22d4" /># To-do List Web App
+# To-do List Web App
 
 A Laravel 12 + Vite application that helps you manage daily tasks with powerful filtering, quick editing, and a calendar-first overview. The interface is crafted with Tailwind CSS 4 utilities to keep the experience modern and responsive.
 
@@ -99,6 +99,11 @@ The command clears cached configuration before executing the Pest-powered test s
 - `database/migrations/2024_01_01_000000_create_tasks_table.php` – schema definition for the `tasks` table.
 
 ## Screenshot Checklist for Documentation
+<img width="827" height="770" alt="image" src="https://github.com/user-attachments/assets/c0c17596-6aab-4247-98fd-6147d4fac3ac" /> 
+Dashboard – Task Overview and Filters
+Displays the welcome banner, current date, and navigation buttons (Tasks / Calendar).
+The filter section allows searching by title or notes, filtering by status, and sorting tasks.
+The “Add a Task” form lets users create new tasks with title, due date, priority, and notes.
 
 
 ## Contribution Guidelines
