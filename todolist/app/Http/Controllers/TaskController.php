@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,6 +23,59 @@ class TaskController extends Controller
 
         $tasks = $query->paginate(10)->appends($request->query());
 
+        $now = Carbon::now();
+        $startOfWeek = $now->copy()->startOfWeek();
+        $endOfWeek = $now->copy()->endOfWeek();
+        $startOfMonth = $now->copy()->startOfMonth();
+        $endOfMonth = $now->copy()->endOfMonth();
+
+        $weeklyTasks = Task::query()
+            ->whereNotNull('due_date')
+            ->whereBetween('due_date', [$startOfWeek, $endOfWeek])
+            ->get();
+
+        $monthlyTasks = Task::query()
+            ->whereNotNull('due_date')
+            ->whereBetween('due_date', [$startOfMonth, $endOfMonth])
+            ->get();
+
+        $calendarStart = $startOfMonth->copy()->startOfWeek();
+        $calendarEnd = $endOfMonth->copy()->endOfWeek();
+
+        $calendarDays = collect(CarbonPeriod::create($calendarStart, $calendarEnd))->map(
+            static fn (Carbon $day) => $day->copy(),
+        );
+
+        $calendarTasksByDate = Task::query()
+            ->whereNotNull('due_date')
+            ->whereBetween('due_date', [$calendarStart, $calendarEnd])
+            ->orderBy('due_date')
+            ->get()
+            ->groupBy(fn (Task $task) => $task->due_date?->toDateString());
+
+        $summary = [
+            'totals' => [
+                'total' => Task::query()->count(),
+                'completed' => Task::query()->where('is_done', true)->count(),
+                'active' => Task::query()->where('is_done', false)->count(),
+                'overdue' => Task::query()
+                    ->where('is_done', false)
+                    ->whereNotNull('due_date')
+                    ->whereDate('due_date', '<', $now->toDateString())
+                    ->count(),
+            ],
+            'week' => [
+                'total' => $weeklyTasks->count(),
+                'completed' => $weeklyTasks->where('is_done', true)->count(),
+                'remaining' => $weeklyTasks->where('is_done', false)->count(),
+            ],
+            'month' => [
+                'total' => $monthlyTasks->count(),
+                'completed' => $monthlyTasks->where('is_done', true)->count(),
+                'remaining' => $monthlyTasks->where('is_done', false)->count(),
+            ],
+        ];
+
         return view('tasks.index', [
             'tasks' => $tasks,
             'filters' => [
@@ -28,6 +83,13 @@ class TaskController extends Controller
                 'status' => $request->get('status', 'all'),
                 'sort' => $sort,
             ],
+            'summary' => $summary,
+            'calendar' => [
+                'monthLabel' => $now->format('F Y'),
+                'days' => $calendarDays,
+                'tasksByDate' => $calendarTasksByDate,
+            ],
+            'today' => $now,
         ]);
     }
 
