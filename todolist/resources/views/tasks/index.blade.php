@@ -94,8 +94,8 @@
                 <div class="sm:col-span-2 flex justify-end">
                     <button type="submit" class="inline-flex items-center rounded-lg bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Create task</button>
                 </div>
-            </form>
-        </div>
+                </form>
+            </div>
 
         <div class="rounded-3xl bg-white/80 shadow-xl ring-1 ring-white/60 backdrop-blur">
             <div class="flex items-center justify-between border-b border-white/60 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 px-6 py-4">
@@ -267,6 +267,8 @@
                     </div>
                 @endif
             </div>
+                </div>
+            </div>
         </div>
 
         <div class="rounded-3xl bg-white/80 shadow-lg ring-1 ring-white/60 backdrop-blur">
@@ -303,17 +305,22 @@
                         <div class="mt-2 h-2 rounded-full bg-slate-200">
                             <div class="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width: {{ $weekCompletion }}%"></div>
                         </div>
-                        <p class="mt-2 text-xs text-slate-500">{{ $summary['week']['remaining'] }} tasks remaining this week.</p>
                     </div>
-                    <div>
-                        <div class="flex items-center justify-between text-xs font-medium text-slate-600">
-                            <span>This month</span>
-                            <span>{{ $summary['month']['completed'] }} / {{ $summary['month']['total'] }}</span>
+
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between text-xs font-medium text-slate-600">
+                                <span>This week</span>
+                                <span>{{ $summary['week']['completed'] }} / {{ $summary['week']['total'] }}</span>
+                            </div>
+                            <div class="mt-2 h-2 rounded-full bg-slate-200">
+                                <div class="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" style="width: {{ $weekCompletion }}%"></div>
+                            </div>
+                            <p class="mt-2 text-xs text-slate-500">{{ $summary['week']['remaining'] }} tasks remaining this week.</p>
                         </div>
                         <div class="mt-2 h-2 rounded-full bg-slate-200">
                             <div class="h-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500" style="width: {{ $monthCompletion }}%"></div>
                         </div>
-                        <p class="mt-2 text-xs text-slate-500">{{ $summary['month']['remaining'] }} tasks left this month.</p>
                     </div>
                 </div>
             </div>
